@@ -22,7 +22,7 @@
  *
  *  Do not match:
  *   '{D44EF4F4-280B47E5-91C7-261222A59621}'
- *   '{D1A5279D-B27D-4CD4-A05E-EFDH53D08E8D}'
+ *   '{D1A5279D-B27D-4CD4-A05E-EFDH53D08E8D}'ы
  *   '{5EDEB36C-9006-467A8D04-AFB6F62CD7D2}'
  *   '677E2553DD4D43B09DA77414DB1EB8EA'
  *   '0c74f13f-fa83-4c48-9b33-68921dd72463'
@@ -31,7 +31,8 @@
  * @return {RegExp}
  */
 function getRegexForGuid() {
-   throw new Error('Not implemented');
+   let reg=/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}[}]/;
+  return reg;
 }
 
 
@@ -53,7 +54,8 @@ function getRegexForGuid() {
  *
  */
 function getRegexForPitSpot() {
-   throw new Error('Not implemented');
+   let reg=/p.t(?!ea|ar)/;
+  return reg
 }
 
 
@@ -72,7 +74,8 @@ function getRegexForPitSpot() {
  * @return {RegExp}
  */
 function getRegexForIPv4() {
-   throw new Error('Not implemented');
+   let reg=/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  return reg
 }
 
 
@@ -91,7 +94,8 @@ function getRegexForIPv4() {
  * @return {RegExp}
  */
 function getRegexForSSN() {
-   throw new Error('Not implemented');
+   let reg=/^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/;
+  return reg
 }
 
 

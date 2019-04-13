@@ -23,7 +23,11 @@
  *    console.log(r.getArea());   // => 200
  */
 function Rectangle(width, height) {
-    throw new Error('Not implemented');
+    this.width = width;
+    this.height = height;
+    this.getArea = function () {
+        return width * height;
+    }
 }
 
 
@@ -38,7 +42,7 @@ function Rectangle(width, height) {
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
 function getJSON(obj) {
-    throw new Error('Not implemented');
+    return JSON.stringify(obj);
 }
 
 
@@ -54,7 +58,16 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
+    // return  JSON.parse(json,(key,value)=>{
+    //     if(typeof value == 'Function'){
+    //         return new proto.constructor(value);
+    //     }
+    //     return value;
+    // });
+    // return new proto.constructor(JSON.parse(json,proto));
+    // return JSON.parse(json,proto);
     throw new Error('Not implemented');
+
 }
 
 
@@ -108,32 +121,76 @@ function fromJSON(proto, json) {
 
 const cssSelectorBuilder = {
 
-    element: function(value) {
-        throw new Error('Not implemented');
+    element: function (value) {
+        function constructor(value) {
+            this.value = value;
+            this.stringify = function () {
+                return '' + this.value;
+            }
+        }
+        return new constructor(value);
     },
 
-    id: function(value) {
-        throw new Error('Not implemented');
+    id: function (value) {
+        function constructor(value) {
+            this.value = '#'+value;
+            this.stringify = function () {
+                return '' + this.value;
+            }
+        }
+        return new constructor(value);
     },
 
-    class: function(value) {
-        throw new Error('Not implemented');
+    class: function (value) {
+        function constructor(value) {
+            this.value = '.'+value;
+            this.stringify = function () {
+                return '' + this.value;
+            }
+        }
+        return new constructor(value);
     },
 
-    attr: function(value) {
-        throw new Error('Not implemented');
+    attr: function (value) {
+        function constructor(value) {
+            this.value = '['+value+']';
+            this.stringify = function () {
+                return '' + this.value;
+            }
+        }
+        return new constructor(value);
     },
 
-    pseudoClass: function(value) {
-        throw new Error('Not implemented');
+    pseudoClass: function (value) {
+        function constructor(value) {
+            this.value = ':'+value;
+            this.stringify = function () {
+                return '' + this.value;
+            }
+        }
+        return new constructor(value);
     },
 
-    pseudoElement: function(value) {
-        throw new Error('Not implemented');
+    pseudoElement: function (value) {
+        function constructor(value) {
+            this.value = '::'+value;
+            this.stringify = function () {
+                return '' + this.value;
+            }
+        }
+        return new constructor(value);
     },
 
-    combine: function(selector1, combinator, selector2) {
-        throw new Error('Not implemented');
+    combine: function (selector1, combinator, selector2) {
+        function constructor(selector1, combinator, selector2) {
+            this.selector1 = ''+selector1 +' ';
+            this.combinator = ''+combinator;
+            this.selector2 = ' '+selector2;
+            this.stringify = function () {
+                return '' + this.selector1 + this.combinator + this.selector2;
+            }
+        }
+        return new constructor(selector1, combinator, selector2);
     },
 };
 
