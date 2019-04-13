@@ -9,7 +9,7 @@
  *                                                                                           *
  *********************************************************************************************/
 
- 
+
 /**
  * Returns an index of the specified element in array or -1 if element is not found
  * 
@@ -40,9 +40,9 @@ function findElement(arr, value) {
 function generateOdds(len) {
    let arr = new Array(len).fill(undefined);
    let count = 1;
-   return arr.map(() =>{
+   return arr.map(() => {
       let num = count;
-      count +=2;
+      count += 2;
       return num;
    });
 }
@@ -93,7 +93,7 @@ function getArrayOfPositives(arr) {
 function getArrayOfStrings(arr) {
    let strArray = [];
    arr.map((item) => {
-      if(typeof item == 'string'){
+      if (typeof item == 'string') {
          strArray.push(item);
       }
    });
@@ -128,7 +128,7 @@ function removeFalsyValues(arr) {
  *    [ 'a', 'b', 'c', 'd', 'e', 'f', 'g' ]  => [ 'A', 'B', 'C', 'D', 'E', 'F', 'G' ]
  */
 function getUpperCaseStrings(arr) {
-   return arr.map(item => {return item.toUpperCase()});
+   return arr.map(item => { return item.toUpperCase() });
 }
 
 
@@ -172,7 +172,7 @@ function insertItem(arr, item, index) {
  *    [ 'a', 'b', 'c', 'd'], 3  => [ 'a', 'b', 'c' ]
  */
 function getHead(arr, n) {
-   return arr.slice(0,n);
+   return arr.slice(0, n);
 }
 
 
@@ -187,7 +187,7 @@ function getHead(arr, n) {
  *    [ 'a', 'b', 'c', 'd'], 3  => [ 'b', 'c', 'd' ]
  */
 function getTail(arr, n) {
-   return arr.slice(arr.length-n,arr.length);
+   return arr.slice(arr.length - n, arr.length);
 }
 
 
@@ -212,8 +212,8 @@ function getTail(arr, n) {
  *    +'30,31,32,33,34'
  */
 function toCsvText(arr) {
-   let res = arr.map((items) =>{return items.toString()}).reduce((str,item)=>{return str+ item +'\n'},'');
-   return res.substring(0,res.length-1);
+   let res = arr.map((items) => { return items.toString() }).reduce((str, item) => { return str + item + '\n' }, '');
+   return res.substring(0, res.length - 1);
 }
 
 /**
@@ -228,7 +228,7 @@ function toCsvText(arr) {
  *   [ 10, 100, -1 ]      => [ 100, 10000, 1 ]
  */
 function toArrayOfSquares(arr) {
-   return arr.map(item => item*item);
+   return arr.map(item => item * item);
 }
 
 
@@ -247,10 +247,10 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-   return arr.map((item,index) => {
-      return arr.slice(0,index+1).reduce((sum,item) =>{
+   return arr.map((item, index) => {
+      return arr.slice(0, index + 1).reduce((sum, item) => {
          return sum + item;
-      },0);
+      }, 0);
    });
 }
 
@@ -266,7 +266,7 @@ function getMovingSum(arr) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-   return arr.filter((item,index) => index % 2 != 0);
+   return arr.filter((item, index) => index % 2 != 0);
 }
 
 
@@ -285,9 +285,9 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-   return arr.reduce((mas,item,index) => {
+   return arr.reduce((mas, item, index) => {
       return mas.concat(new Array(index + 1).fill(item));
-   },[]);
+   }, []);
 }
 
 
@@ -305,10 +305,10 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-   return arr.sort((a,b) => b-a).slice(0,3);
+   return arr.sort((a, b) => b - a).slice(0, 3);
 }
- 
- 
+
+
 /**  
  * Returns the number of positive numbers from specified array
  * 
@@ -324,12 +324,12 @@ function get3TopItems(arr) {
  */
 function getPositivesCount(arr) {
    return arr.filter(item => {
-      if(typeof(item) === 'number' && item > 0){
+      if (typeof (item) === 'number' && item > 0) {
          return true;
       }
    }).length;
 }
- 
+
 /** 
  * Sorts digit names
  * 
@@ -344,8 +344,8 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
-   let numbers =['zero','one','two','three','four','five','six','seven','eight','nine'];
-   return arr.sort((a,b) => numbers.indexOf(a) - numbers.indexOf(b));
+   let numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+   return arr.sort((a, b) => numbers.indexOf(a) - numbers.indexOf(b));
 }
 
 /** 
@@ -361,11 +361,11 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
 function getItemsSum(arr) {
-   return arr.reduce((sum,item) =>{
+   return arr.reduce((sum, item) => {
       return sum + item;
-   },0);
+   }, 0);
 }
- 
+
 /** 
  * Returns the number of all falsy value in the specified array
  * 
@@ -441,25 +441,25 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
-   return  arr.sort(comparator);
-   function comparator(a,b){
-      return a.country == b.country? compareCity(a,b) : compareCountry(a,b);
+   return arr.sort(comparator);
+   function comparator(a, b) {
+      return a.country == b.country ? compareCity(a, b) : compareCountry(a, b);
    }
 
-   function compareCountry(a,b) {
+   function compareCountry(a, b) {
       if (a.country < b.country)
-        return -1;
+         return -1;
       if (a.country > b.country)
-        return 1;
+         return 1;
       return 0;
    }
-   function compareCity(a,b) {
+   function compareCity(a, b) {
       if (a.city < b.city)
-        return -1;
+         return -1;
       if (a.city > b.city)
-        return 1;
+         return 1;
       return 0;
-    }
+   }
 }
 
 /**
@@ -481,12 +481,12 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]   
  */
 function getIdentityMatrix(n) {
-   // let arr = new Array(n).fill(new Array(n).fill(0));
-   // return arr.map((item,index) => {
-   //    item[index] = 1;
-   //    return item;
-   // });
-   throw new Error('Not implemented');
+   let arr = new Array(n).fill(0).map((item, index) => {
+      item = new Array(n);
+      item.fill(0).splice(index, 1, 1);
+      return item;
+   });
+   return arr;
 }
 
 /**
@@ -503,7 +503,9 @@ function getIdentityMatrix(n) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-   throw new Error('Not implemented');
+   return new Array(Math.abs(start - end) + 1)
+      .fill(0)
+      .map((item, index) => item = start + index);
 }
 
 /**
@@ -518,7 +520,7 @@ function getIntervalArray(start, end) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(arr) {
-   throw new Error('Not implemented');
+   return Array.from(new Set(arr));
 }
 
 /**
@@ -552,7 +554,15 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-   throw new Error('Not implemented');
+   let b = array.map(item => item[Object.keys(item)[0]]);
+   let set = new Set(array.map(item => item[Object.keys(item)[0]]));
+   let keys = Array.from(set);
+   let sortVal = [];
+   keys.map(key => {
+      let buf = array.filter(item => keySelector(item) == key).map(item => valueSelector(item));
+      sortVal.push([key, buf]);
+   })
+   return new Map(sortVal);
 }
 
 
@@ -568,7 +578,13 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-    throw new Error('Not implemented');
+   let result = [];
+   result = arr.reduce((prev, curr) => {
+      let aaa = childrenSelector(curr);
+      prev = prev.concat(aaa)
+      return prev
+   }, result)
+   return result
 }
 
 
@@ -585,7 +601,9 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-    throw new Error('Not implemented');
+   return indexes.reduce((mas,item) =>{
+      return mas[item];
+   },arr);
 }
 
 
@@ -608,40 +626,45 @@ function getElementByIndexes(arr, indexes) {
  * 
  */
 function swapHeadAndTail(arr) {
-    throw new Error('Not implemented');
+   let middle = Math.floor(arr.length / 2);
+   let head = arr.slice(0,middle);
+   let tail =arr.slice(middle,arr.length)
+   return middle == arr.length / 2? 
+   tail.concat(head): 
+   arr.slice(middle+1,arr.length).concat(arr[middle]).concat(arr.slice(0,middle));
 }
 
 
 module.exports = {
-    findElement: findElement,
-    generateOdds: generateOdds,
-    doubleArray: doubleArray,
-    getArrayOfPositives: getArrayOfPositives,
-    getArrayOfStrings: getArrayOfStrings,
-    removeFalsyValues: removeFalsyValues,
-    getUpperCaseStrings: getUpperCaseStrings,
-    getStringsLength: getStringsLength,
-    insertItem: insertItem,
-    getHead: getHead,
-    getTail: getTail,
-    toCsvText: toCsvText,
-    toStringList: toStringList,
-    toArrayOfSquares: toArrayOfSquares,
-    getMovingSum: getMovingSum,
-    getSecondItems: getSecondItems,
-    propagateItemsByPositionIndex: propagateItemsByPositionIndex,
-    get3TopItems: get3TopItems,
-    getPositivesCount: getPositivesCount,
-    sortDigitNamesByNumericOrder: sortDigitNamesByNumericOrder,
-    getItemsSum: getItemsSum,
-    getFalsyValuesCount: getFalsyValuesCount,
-    findAllOccurences: findAllOccurences,
-    sortCitiesArray: sortCitiesArray,
-    getIdentityMatrix: getIdentityMatrix,
-    getIntervalArray: getIntervalArray,
-    distinct: distinct,
-    group: group,
-    selectMany: selectMany,
-    getElementByIndexes: getElementByIndexes,
-    swapHeadAndTail: swapHeadAndTail
+   findElement: findElement,
+   generateOdds: generateOdds,
+   doubleArray: doubleArray,
+   getArrayOfPositives: getArrayOfPositives,
+   getArrayOfStrings: getArrayOfStrings,
+   removeFalsyValues: removeFalsyValues,
+   getUpperCaseStrings: getUpperCaseStrings,
+   getStringsLength: getStringsLength,
+   insertItem: insertItem,
+   getHead: getHead,
+   getTail: getTail,
+   toCsvText: toCsvText,
+   toStringList: toStringList,
+   toArrayOfSquares: toArrayOfSquares,
+   getMovingSum: getMovingSum,
+   getSecondItems: getSecondItems,
+   propagateItemsByPositionIndex: propagateItemsByPositionIndex,
+   get3TopItems: get3TopItems,
+   getPositivesCount: getPositivesCount,
+   sortDigitNamesByNumericOrder: sortDigitNamesByNumericOrder,
+   getItemsSum: getItemsSum,
+   getFalsyValuesCount: getFalsyValuesCount,
+   findAllOccurences: findAllOccurences,
+   sortCitiesArray: sortCitiesArray,
+   getIdentityMatrix: getIdentityMatrix,
+   getIntervalArray: getIntervalArray,
+   distinct: distinct,
+   group: group,
+   selectMany: selectMany,
+   getElementByIndexes: getElementByIndexes,
+   swapHeadAndTail: swapHeadAndTail
 };

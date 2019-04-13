@@ -79,7 +79,7 @@ function isLeapYear(date) {
       if (msec < 10) {
          msec = '00' + msec
       }
-      return `${ hour }: ${ min }: ${ sec }.${ msec }`;
+      return `${hour}: ${min}: ${sec}.${msec}`;
 
    }
 }
@@ -119,7 +119,12 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-   throw new Error('Not implemented');
+   let minute = date.getUTCMinutes();
+   let hour = date.getUTCHours() > 12 ? date.getUTCHours() - 12 : date.getUTCHours();
+   let angle = Math.abs(60 * hour - 11 * minute) / 2;
+
+   return Math.min(angle, 360 - angle) * Math.PI / 180;
+
 }
 
 
