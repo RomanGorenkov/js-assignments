@@ -56,7 +56,32 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+   let year = date.getFullYear()
+   return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+   function timeSpanToString(startDate, endDate) {
+      let hour = endDate.getHours() - startDate.getHours();
+      let min = endDate.getMinutes() - startDate.getMinutes();
+      let sec = endDate.getSeconds() - startDate.getSeconds();
+      let msec = endDate.getMilliseconds() - startDate.getMilliseconds();
+
+      if (hour < 10) {
+         hour = '0' + hour
+      }
+      if (min < 10) {
+         min = '0' + min
+      }
+      if (sec < 10) {
+         sec = '0' + sec
+      }
+      if (msec < 100 && msec >= 10) {
+         msec = '0' + msec
+      }
+      if (msec < 10) {
+         msec = '00' + msec
+      }
+      return `${ hour }: ${ min }: ${ sec }.${ msec }`;
+
+   }
 }
 
 
@@ -94,14 +119,14 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+   throw new Error('Not implemented');
 }
 
 
 module.exports = {
-    parseDataFromRfc2822: parseDataFromRfc2822,
-    parseDataFromIso8601: parseDataFromIso8601,
-    isLeapYear: isLeapYear,
-    timeSpanToString: timeSpanToString,
-    angleBetweenClockHands: angleBetweenClockHands
+   parseDataFromRfc2822: parseDataFromRfc2822,
+   parseDataFromIso8601: parseDataFromIso8601,
+   isLeapYear: isLeapYear,
+   timeSpanToString: timeSpanToString,
+   angleBetweenClockHands: angleBetweenClockHands
 };
