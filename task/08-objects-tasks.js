@@ -25,9 +25,10 @@
 function Rectangle(width, height) {
     this.width = width;
     this.height = height;
-    this.getArea = function () {
-        return width * height;
-    }
+    this.__proto__.getArea = () => this.width * this.height;
+    // this.getArea = function () {
+    //     return width * height;
+    // }
 }
 
 
@@ -58,17 +59,11 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-    // return  JSON.parse(json,(key,value)=>{
-    //     if(typeof value == 'Function'){
-    //         return new proto.constructor(value);
-    //     }
-    //     return value;
-    // });
-    // return new proto.constructor(JSON.parse(json,proto));
-    // return JSON.parse(json,proto);
-    throw new Error('Not implemented');
-
+    const obj = JSON.parse(json);
+    obj.__proto__ = proto;
+    return obj;
 }
+
 
 
 /**
@@ -120,77 +115,69 @@ function fromJSON(proto, json) {
  */
 
 const cssSelectorBuilder = {
+    string: '',
 
-    element: function (value) {
-        function constructor(value) {
-            this.value = value;
-            this.stringify = function () {
-                return '' + this.value;
-            }
-        }
-        return new constructor(value);
+    element: function(value) {
+        this.error(1);
+        let obj = Object.create(cssSelectorBuilder);
+        obj.i = 1;
+        obj.string = value;
+        return obj;
     },
 
-    id: function (value) {
-        function constructor(value) {
-            this.value = '#'+value;
-            this.stringify = function () {
-                return '' + this.value;
-            }
-        }
-        return new constructor(value);
+    id: function(value) {
+        this.error(2);
+        let obj = Object.create(cssSelectorBuilder);
+        obj.i = 2;
+        obj.string = `${this.string}#${value}`;
+        return obj;
     },
 
-    class: function (value) {
-        function constructor(value) {
-            this.value = '.'+value;
-            this.stringify = function () {
-                return '' + this.value;
-            }
-        }
-        return new constructor(value);
+    class: function(value) {
+        this.error(3);
+        let obj = Object.create(cssSelectorBuilder);
+        obj.i = 3;
+        obj.string = `${this.string}.${value}`;
+        return obj;
     },
 
-    attr: function (value) {
-        function constructor(value) {
-            this.value = '['+value+']';
-            this.stringify = function () {
-                return '' + this.value;
-            }
-        }
-        return new constructor(value);
+    attr: function(value) {
+        this.error(4);
+        let obj = Object.create(cssSelectorBuilder);
+        obj.i = 4;
+        obj.string = `${this.string}[${value}]`;
+        return obj;
     },
 
-    pseudoClass: function (value) {
-        function constructor(value) {
-            this.value = ':'+value;
-            this.stringify = function () {
-                return '' + this.value;
-            }
-        }
-        return new constructor(value);
+    pseudoClass: function(value) {
+        this.error(5);
+        let obj = Object.create(cssSelectorBuilder);
+        obj.i = 5;
+        obj.string = `${this.string}:${value}`;
+        return obj;
     },
 
-    pseudoElement: function (value) {
-        function constructor(value) {
-            this.value = '::'+value;
-            this.stringify = function () {
-                return '' + this.value;
-            }
-        }
-        return new constructor(value);
+    pseudoElement: function(value) {
+        this.error(6);
+        let obj = Object.create(cssSelectorBuilder);
+        obj.i = 6;
+        obj.string = `${this.string}::${value}`
+        return obj;
     },
 
-    combine: function (selector1, combinator, selector2) {
-        function constructor(selector1, combinator, selector2) {
-            this.selector1 = ''+selector1 +' ';
-            this.combinator = ''+combinator;
-            this.selector2 = ' '+selector2;
-            this.stringify = function () {
-                return '' + this.selector1 + this.combinator + this.selector2;
-            }
-        }
-        return new constructor(selector1, combinator, selector2);
+    combine: function(selector1, combinator, selector2) {
+        let obj = Object.create(cssSelectorBuilder);
+        obj.string = `${selector1.string} ${combinator} ${selector2.string}`;
+        return obj;
+    },
+
+    stringify: function() {
+        return this.string;
+    },
+
+    error: function(newi) {
+        if (this.i > newi) throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+        if (this.i == newi && (newi == 1 ||  newi == 2 || newi == 6)) throw new Error('Element, id and pseudo-element should not occur more then one time inside the selector');
     },
 };
 
