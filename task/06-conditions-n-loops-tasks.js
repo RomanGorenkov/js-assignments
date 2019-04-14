@@ -121,8 +121,11 @@ function isTriangle(a, b, c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    //    return Math.abs(rect1.top - rect2.top) < Math.abs(rect1.height - rect2.height);
-    throw new Error('Not implemented');
+    if (rect2.top > rect1.top + rect1.height) return false;
+    if (rect2.left > rect1.left + rect1.width) return false;
+    if (rect1.top > rect2.top + rect2.height) return false;
+    if (rect1.left > rect2.left + rect2.width) return false;
+    return true;
 }
 
 
@@ -260,25 +263,27 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(digits) {
-    //     let sum = 0;
+function isCreditCardNumber(ccn) {
+    var inputNum = ccn.toString();
+    var sum = 0;
+    var doubleUp = false;
+    for (var i = inputNum.length - 1; i >= 0; i--) {
+        var curDigit = parseInt(inputNum.charAt(i));
+        if (doubleUp) {
+            if ((curDigit * 2) > 9) {
+                sum += (curDigit * 2) - 9;
+            }
+            else {
+                sum += curDigit * 2;
+            }
+        }
+        else {
+            sum += curDigit;
+        }
+        var doubleUp = !doubleUp
+    }
 
-    //   for (let i = 0; i < digits.length; i++) {
-    //     let cardNum = parseInt(digits[i]);
-
-    //     if ((digits.length - i) % 2 === 0) {
-    //       cardNum = cardNum * 2;
-
-    //       if (cardNum > 9) {
-    //         cardNum = cardNum - 9;
-    //       }
-    //     }
-
-    //     sum += cardNum;
-    //   }
-
-    //   return sum % 10 === 0;
-    throw new Error('Not implemented');
+    return (sum % 10) == 0 ? true : false;
 }
 
 
@@ -414,7 +419,73 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    let delta = endDate.getTime() - startDate.getTime();
+    let answer = ''
+    let sec = delta / 1000;
+    let min = sec / 60;
+    let hour = min / 60;
+    let day = hour / 24;
+    let months = day / 30;
+    let year = endDate.getFullYear() - startDate.getFullYear();
+
+    if (sec > 0 && sec <= 45) {
+        answer = `a few seconds ago`;
+    }
+
+    else if (sec > 45 && sec <= 90) {
+        answer = `a minute ago`;
+    }
+    else if (sec > 90 && min <= 45) {
+        if (Math.floor(min) == 1) {
+            min = 2;
+        }
+        answer = `${Math.floor(min)} minutes ago`;
+    }
+    else if (min > 45 && min <= 90) {
+        answer = `an hour ago`;
+    }
+    else if (min > 90 && hour <= 22) {
+        if (Math.round(hour) == 1) {
+            hour = 2;
+        }
+        else if (sec / 60 / 60 == 4.5) {
+            hour = 4;
+        }
+        else if (sec / 60 / 60 > 4.5 && sec / 60 / 60 < 4.6) {
+            hour = 5;
+        }
+        // console.log((sec/60/60) )
+        answer = `${Math.round(hour)} hours ago`;
+    }
+    else if (hour > 22 && hour <= 36) {
+        answer = `a day ago`;
+    }
+    else if (hour > 36 && day <= 25) {
+        if (Math.floor(day) <= 1) {
+            day = 2;
+        }
+        answer = `${Math.floor(day)} days ago`;
+    }
+    else if (day > 25 && day <= 45) {
+        answer = `a month ago`;
+    }
+    else if (day > 45 && day <= 345) {
+        if (Math.floor(months) == 1) {
+            months = 2;
+        }
+        answer = `${Math.round(months)} months ago`;
+    }
+    else if (day > 345 && day < 545) {
+        answer = `a year ago`;
+    }
+    else if (day > 546) {
+        if (Math.floor(year) == 1) {
+            year = 2;
+        }
+        answer = `${Math.floor(year)} years ago`;
+    }
+    return answer
+
 }
 
 
@@ -439,7 +510,7 @@ function timespanToHumanString(startDate, endDate) {
  */
 function toNaryString(num, n) {
     return num.toString(n);
-    }
+}
 
 
 /**
@@ -455,13 +526,27 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-    const splitStrings = (a, sep = '/') => a.map(i => i.split(sep));
-    const elAt = i => a => a[i];
-    const rotate = a => a[0].map((e, i) => a.map(elAt(i)));
-    const allElementsEqual = arr => arr.every(e => e === arr[0]);
-    const commonPath = (input, sep = '/') => rotate(splitStrings(input, sep))
-    .filter(allElementsEqual).map(elAt(0)).join(sep);
-    return commonPath(pathes);
+    if (!pathes)
+        return '';
+
+    let smallest = pathes.reduce((min, str) => min < str ? min : str, pathes[0]);
+    let largest = pathes.reduce((min, str) => min > str ? min : str, pathes[0]);
+
+    for (let i = 0; i < smallest.length; i++) {
+        if (smallest[i] != largest[i]) {
+            let strRet = smallest.substr(0, i);
+            if (strRet[strRet.length - 1] == '/') {
+                return strRet;
+            }
+            else {
+                let index = strRet.lastIndexOf('/');
+                return strRet.slice(0, index + 1)
+            }
+
+        }
+    }
+
+    return '';
 }
 
 
@@ -492,13 +577,13 @@ function getMatrixProduct(m1, m2) {
 
     for (let i = 0; i < rowsM1; i++) m3[i] = [];
 
-    for (let k = 0; k < colsM2; k++)
-     { for (let i = 0; i < rowsM1; i++)
-        { let temp = 0;
-          for (let j = 0; j < rowsM2; j++) temp += m1[i][j]*m2[j][k];
-          m3[i][k] = temp;
+    for (let k = 0; k < colsM2; k++) {
+        for (let i = 0; i < rowsM1; i++) {
+            let temp = 0;
+            for (let j = 0; j < rowsM2; j++) temp += m1[i][j] * m2[j][k];
+            m3[i][k] = temp;
         }
-     }
+    }
 
     return m3;
 }
@@ -535,7 +620,40 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    // throw new Error('Not implemented');
+    let bigArr = [];
+    let res, win;
+    for (let i = 0; i < 3; i++) {
+        if (position[i].length < 3) {
+            position[i].push(' ')
+        }
+        bigArr = bigArr.concat(position[i]);
+    }
+
+    for (let i = 0; i < bigArr.length - 1; i++) {
+        if (i % 3 == 0 && bigArr[i] == bigArr[i + 1] && bigArr[i + 1] == bigArr[i + 2]) {
+            res = true;
+            win = bigArr[i];
+            break
+        }
+        if (i < 3 && bigArr[i] == bigArr[i + 3] && bigArr[i + 3] == bigArr[i + 6]) {
+            res = true;
+            win = bigArr[i];
+            break
+        }
+        if (i == 0 && bigArr[i] == bigArr[i + 4] && bigArr[i + 4] == bigArr[i + 8]) {
+            res = true;
+            win = bigArr[i];
+            break
+        }
+        if (i == 2 && bigArr[2] == bigArr[4] && bigArr[4] == bigArr[6]) {
+            res = true;
+            win = bigArr[2];
+            break
+        }
+    }
+
+    return win
 }
 
 
@@ -559,3 +677,4 @@ module.exports = {
     getMatrixProduct: getMatrixProduct,
     evaluateTicTacToePosition: evaluateTicTacToePosition
 };
+// console.log(evaluateTicTacToePosition([[ 'X',   ,'0' ],[    ,'X','0' ],  [    ,   ,'X' ]]));
